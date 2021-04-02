@@ -12,7 +12,7 @@ arch=${1:-amd64}
 # Ubuntu mirror to use
 mirror=${2:-"http://archive.ubuntu.com/ubuntu/"}
 # Ubuntu release to add as a base by debootstrap
-release=${4:-xenial}
+release=${4:-focal}
 gnomelanguage=${3:-'{en}'}
 
 # Installing the tools that needs to be installed
@@ -57,13 +57,15 @@ done
 # Squashing the live filesystem (Compresssing the chroot)
 sudo mksquashfs chroot image/casper/filesystem.squashfs -noappend -no-progress
 # Creating the ISO image from the tree
-IMAGE_NAME=${IMAGE_NAME:-"CUSTOM ${release} $(date -u +%Y%m%d) - ${arch}"}
+IMAGE_NAME=${IMAGE_NAME:-"CUSTOM-${release}-$(date -u +%Y%m%d)-${arch}"}
 ISOFILE=CUSTOM-${release}-$(date -u +%Y%m%d)-${arch}.iso
+
+cd image
 sudo apt-get install genisoimage
-sudo genisoimage -r -V "$IMAGE_NAME" -cache-inodes -J -l \
+sudo genisoimage -r -V "$IMAGE_NAME" -cache-inodes -joliet-long -l \
   -b isolinux/isolinux.bin -c isolinux/boot.cat \
   -no-emul-boot -boot-load-size 4 -boot-info-table \
-  -p "${DEBFULLNAME:-$USER} <${DEBEMAIL:-on host $(hostname --fqdn)}>" \
+  -p "${DEBFULLNAME:-$USER}" \
   -A "$IMAGE_NAME" \
   -m filesystem.squashfs \
   -o ../$ISOFILE.tmp .
@@ -86,14 +88,15 @@ sudo find . -type f -print0 |xargs -0 sudo md5sum |grep -v "\./md5sum.txt" >md5s
 sudo rm ../$ISOFILE.tmp
 
 sudo apt-get install genisoimage
-sudo genisoimage -r -V "$IMAGE_NAME" -cache-inodes -J -l \
+
+sudo genisoimage -r -V "$IMAGE_NAME" -cache-inodes -joliet-long -l \
   -allow-limited-size -udf \
   -b isolinux/isolinux.bin -c isolinux/boot.cat \
   -no-emul-boot -boot-load-size 4 -boot-info-table \
-  -p "${DEBFULLNAME:-$USER} <${DEBEMAIL:-on host $(hostname --fqdn)}>" \
+  -p "${DEBFULLNAME:-$USER}" \
   -A "$IMAGE_NAME" \
   -o ../$ISOFILE .
 
 # Create the associated md5sum file
 cd ..
-md5sum $ISOFILE >${ISOFILE}.md5
+# md5sum $ISOFILE >${ISOFILE}.md5

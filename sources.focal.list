@@ -1,0 +1,15 @@
+deb http://mirror.kakao.com/ubuntu focal main restricted universe multiverse
+deb http://mirror.kakao.com/ubuntu focal-updates main restricted universe multiverse
+deb http://mirror.kakao.com/ubuntu focal-backports main restricted universe multiverse
+
+deb http://mirror.kakao.com/ubuntu/ focal-security main restricted universe multiverse
+deb http://archive.canonical.com/ubuntu/ focal partner
+
+deb-src http://ftp.kaist.ac.kr/linuxmint ulyana main upstream import backport #id:linuxmint_main
+
+deb-src http://mirror.kakao.com/ubuntu focal main restricted universe multiverse
+deb-src http://mirror.kakao.com/ubuntu focal-updates main restricted universe multiverse
+deb-src http://mirror.kakao.com/ubuntu focal-backports main restricted universe multiverse
+
+deb-src http://mirror.kakao.com/ubuntu/ focal-security main restricted universe multiverse
+deb-src http://archive.canonical.com/ubuntu/ focal partner
