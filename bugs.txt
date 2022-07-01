@@ -1,0 +1,6 @@
+I tried the README.md instructions, but the generated .iso file does not boot
+properly (tested with a VirtualBox machine). 
+
+The error I get is:
+
+(initramfs) Unable to find a medium containing a live file system
